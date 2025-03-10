@@ -2363,7 +2363,8 @@ end
 
 # Better GDB defaults ----------------------------------------------------------
 
-set history save
+set history save on
+set history filename /.autodirect/swgwork/rostislavp/tmp/.gdb_history
 set verbose off
 set print pretty on
 set print array off
@@ -2380,3 +2381,34 @@ python Dashboard.start()
 # Local Variables:
 # mode: python
 # End:
+
+dashboard -layout !registers !assembly source !variables stack !breakpoints !expressions !history !memory !threads
+dashboard -style syntax_highlighting 'monokai'
+dashboard -style discard_scrollback False
+dashboard source -style height 40
+dashboard source -style highlight-line False
+dashboard stack -style limit 5
+dashboard variables -style align True
+dashboard variables -style compact False
+
+set disassembly-flavor intel
+
+alias db = dashboard
+alias dbb = db breakpoints
+alias dbt = db threads
+alias dbv = db variables
+alias dba = db assembly
+alias dbr = db registers
+alias dbs = db stack
+
+define hookpost-up
+  dashboard
+end
+
+define hookpost-down
+  dashboard
+end
+
+define hookpost-frame
+  dashboard
+end
